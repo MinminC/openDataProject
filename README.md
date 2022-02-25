@@ -1,6 +1,6 @@
 # OpenData
 - https://data.go.kr 에서 공공데이터 활용
-- RESTFUL API 활용. JSON, XML 활용
+- JSON, XML 활용
 - Kakao Map API 활용
 
 ## Concept
