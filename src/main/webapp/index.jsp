@@ -8,6 +8,12 @@
 <title>Insert title here</title>
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+	.redLine{
+		background:red;
+		color:white;
+	}
+</style>
 </head>
 <body>
 	<h2>실시간 대기 오염 정보</h2>
@@ -98,16 +104,16 @@
 	
 	<h2>지진해일대피소</h2>
 	
-	<input type="button" value="1" id="btn2">
-	<input type="button" value="2" id="btn2">
-	<input type="button" value="3" id="btn2">
-	<input type="button" value="4" id="btn2">
-	<input type="button" value="5" id="btn2">
-	<input type="button" value="6" id="btn2">
-	<input type="button" value="7" id="btn2">
-	<input type="button" value="8" id="btn2">
-	<input type="button" value="9" id="btn2">
-	<input type="button" value="10" id="btn2">
+	<input type="button" value="1" class="btn2" disabled>
+	<input type="button" value="2" class="btn2">
+	<input type="button" value="3" class="btn2">
+	<input type="button" value="4" class="btn2">
+	<input type="button" value="5" class="btn2">
+	<input type="button" value="6" class="btn2">
+	<input type="button" value="7" class="btn2">
+	<input type="button" value="8" class="btn2">
+	<input type="button" value="9" class="btn2">
+	<input type="button" value="10" class="btn2">
 	<br><br>
 	<div id="result2"></div>
 	
@@ -149,19 +155,10 @@
 	*/
 		$(() =>{ 
 			check2(1);
-			$('#btn2').click(function(){
+			$('.btn2').click(function(){
 				check2($(this).val());
 			})
 		});
-		
-		/*
-		$(function(){
-			check2();
-			$('#btn2').click(function(){
-				check2();
-			})
-		})
-		*/
 		function check2(e){
 			$.ajax({
 				url:'earth.do',
@@ -222,6 +219,8 @@
 		$(()=>{
 			//.openMap을 클릭하면 
 			$('#result2').on('click','table .openMap',(e)=>{
+				$(e.target).parents('tr').addClass('redLine');
+				$(e.target).parents('tr').siblings().removeClass('redLine');
 				var lat = $(e.target).siblings('.lat').val();//위도
 				var lon = $(e.target).siblings('.lon').val();//경도
 				
