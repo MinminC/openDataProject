@@ -176,7 +176,7 @@
 								+'<th>타입</th>'
 								+'<th>해수면</th>'
 								+'</tr></thead><tbody>';
-					itemArr.each(function(i, item){
+					itemArr.each((i, item) => {
 						value += '<tr><td>'+$(item).find('sido_name').text()
 								+'</td><td>'+$(item).find('sigungu_name').text()
 								+'</td><td>'+$(item).find('remarks').text()
