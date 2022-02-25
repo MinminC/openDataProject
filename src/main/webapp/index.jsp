@@ -93,7 +93,6 @@
 					}
 				})
 			}
-		document.getElementByTag
 	</script>
 	<hr>
 	
