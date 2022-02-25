@@ -22,7 +22,7 @@
 	
 	<br><br>
 	
-	<table id="result1" border="1" align="center">
+	<table id="result1" border="1">
 		<thead>
 			<th>측정소 명</th>
 			<th>측정 일시</th>
@@ -95,11 +95,21 @@
 			}
 		document.getElementByTag
 	</script>
-	
+	<hr>
 	
 	<h2>지진해일대피소</h2>
 	
-	<input type="button" value="실행" id="btn2">
+	<input type="button" value="1" id="btn2">
+	<input type="button" value="2" id="btn2">
+	<input type="button" value="3" id="btn2">
+	<input type="button" value="4" id="btn2">
+	<input type="button" value="5" id="btn2">
+	<input type="button" value="6" id="btn2">
+	<input type="button" value="7" id="btn2">
+	<input type="button" value="8" id="btn2">
+	<input type="button" value="9" id="btn2">
+	<input type="button" value="10" id="btn2">
+	<br><br>
 	<div id="result2"></div>
 	
 	<script>
@@ -139,9 +149,9 @@
 		가 동일
 	*/
 		$(() =>{ 
-			check2();
+			check2(1);
 			$('#btn2').click(function(){
-				check2();
+				check2($(this).val());
 			})
 		});
 		
@@ -153,11 +163,11 @@
 			})
 		})
 		*/
-		function check2(){
+		function check2(e){
 			$.ajax({
 				url:'earth.do',
 				data:{
-					pageNo:1,
+					pageNo:e,
 					numOfRows: 10,
 					type:'xml'
 				},
@@ -169,12 +179,11 @@
 								+'<th>지구</th>'
 								+'<th>도로</th>'
 								+'<th>주소</th>'
-								+'<th>위도</th>'
-								+'<th>경도</th>'
 								+'<th>수용인원수</th>'
 								+'<th>해안과의 거리</th>'
 								+'<th>타입</th>'
 								+'<th>해수면</th>'
+								+'<th>지도</th>'
 								+'</tr></thead><tbody>';
 					itemArr.each((i, item) => {
 						value += '<tr><td>'+$(item).find('sido_name').text()
@@ -182,12 +191,16 @@
 								+'</td><td>'+$(item).find('remarks').text()
 								+'</td><td>'+$(item).find('shel_nm').text()
 								+'</td><td>'+$(item).find('address').text()
-								+'</td><td>'+$(item).find('lon').text()
-								+'</td><td>'+$(item).find('lat').text()
 								+'</td><td>'+$(item).find('shel_av').text()
 								+'</td><td>'+$(item).find('lenth').text()
 								+'</td><td>'+$(item).find('shel_div_type').text()
 								+'</td><td>'+$(item).find('height').text()
+								
+								+'</td><td>'
+								+'<input type="hidden" class="lon" value="'+$(item).find('lon').text()+'">'
+								+'<input type="hidden" class="lat" value="'+$(item).find('lat').text()+'">'
+								+'<button type="button" class="openMap">지도</button>'
+								
 								+'</td></tr>';
 					})
 					value += '</tbody></table>';
@@ -199,6 +212,36 @@
 				}
 			})
 		}
+	</script>
+	
+	<!-- 지도 구현 부분 -->
+	<h3>대피소 위치</h3>
+	<div id="map" style="width:500px;height:400px; border:1px solid gray;"></div>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7d2500a762fd13aaf0d56c73dfad929a"></script>
+	<script>
+		var container = document.getElementById('map');
+		$(()=>{
+			//.openMap을 클릭하면 
+			$('#result2').on('click','table .openMap',(e)=>{
+				var lat = $(e.target).siblings('.lat').val();//위도
+				var lon = $(e.target).siblings('.lon').val();//경도
+				
+				var options = {
+					center: new kakao.maps.LatLng(lat, lon),
+					level: 3
+				};
+				var map = new kakao.maps.Map(container, options);
+				
+				var markerPosition  = new kakao.maps.LatLng(lat, lon); 
+
+				var marker = new kakao.maps.Marker({
+				    position: markerPosition
+				});
+
+				marker.setMap(map);
+			})
+		})
+
 	</script>
 </body>
 </html>
